@@ -5,7 +5,7 @@ const HeaderContainer = styled.header`
 height: 140px;
 width: 100%;
 
-display: flex;
+display: ${props => props.display};
 
 padding: 0 60px;
 

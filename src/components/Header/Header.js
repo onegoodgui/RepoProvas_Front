@@ -2,12 +2,15 @@ import { Button, FilterSegment, HeaderContainer, HeaderLogo, LogoContainer, Sear
 import repoProvas from "../../images/repoProvas.png"
 import { AddIcon, SchoolOutlineIcon, SubjectIcon } from "./icons";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function Header(){
 
+    const {pathname} = useLocation()
+    console.log(pathname)
 
     return(
-        <HeaderContainer>
+        <HeaderContainer display={(pathname === '/sign-up' || pathname === '/') ? 'none': 'flex'}>
 
             <LogoContainer>
                <HeaderLogo src={repoProvas}/>
