@@ -4,7 +4,7 @@ import useFilter from "../../hooks/useFilter"
 import { api } from "../../services/api";
 import { HomepageContainer } from "./style/style";
 import { CategoriesTeachers, Category, Discipline, DisciplinesCategories, TeacherTest, Term, TermsDisciplines} from "./style/disciplineFilter";
-
+import { Categories, CategoriesTests, Disciplines, Teacher, TeachersCategories, TestsDisciplines,  } from "./style/teachersFilter";
 
 export default function Homepage(){
 
@@ -46,8 +46,10 @@ export default function Homepage(){
 function FilterResults({filter, results}){
 
     const [selectedTerms, setSelectedTerms] = useState([]);
-    const [selectedCategories, setSelectedCategories] = useState([]);
+    const [selectedDisciplines, setSelectedDisciplines] = useState([]);
     const [selectedTests, setSelectedTests] = useState([]);
+    const [selectedTeachers, setSelectedTeachers] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
     
 
     // useEffect(() => {
@@ -72,13 +74,13 @@ function FilterResults({filter, results}){
 
 
     function selectDiscipline(index){
-        if(selectedCategories.includes(index)){
-            selectedCategories.pop(index);
-            setSelectedCategories([...selectedCategories])
+        if(selectedDisciplines.includes(index)){
+            selectedDisciplines.pop(index);
+            setSelectedDisciplines([...selectedDisciplines])
         }
         else{
-            selectedCategories.push(index);
-            setSelectedCategories([...selectedCategories])
+            selectedDisciplines.push(index);
+            setSelectedDisciplines([...selectedDisciplines])
         }
     }
 
@@ -90,6 +92,28 @@ function FilterResults({filter, results}){
         else{
             selectedTests.push(key);
             setSelectedTests([...selectedTests])
+        }
+    }
+
+    function selectTeacher(key){
+        if(selectedTeachers.includes(key)){
+            selectedTeachers.pop(key);
+            setSelectedTeachers([...selectedTeachers])
+        }
+        else{
+            selectedTeachers.push(key);
+            setSelectedTeachers([...selectedTeachers])
+        }
+    }
+
+    function selectCategory(key){
+        if(selectedCategories.includes(key)){
+            selectedCategories.pop(key);
+            setSelectedCategories([...selectedCategories])
+        }
+        else{
+            selectedCategories.push(key);
+            setSelectedCategories([...selectedCategories])
         }
     }
     // const disciplines = results.map(term => term.discipline);
@@ -118,12 +142,12 @@ function FilterResults({filter, results}){
                                                 <Discipline onClick={() => selectDiscipline(discipline.name)} display={selectedTerms.includes(term.number) ? 'flex' : 'none'}>{discipline.name}</Discipline>
                                                 
                                                 {   discipline.teachersDisciplines.length === 0 ?
-                                                        <Category display={selectedCategories.includes(discipline.name) ? 'flex' : 'none'} >{'nao disponivel'}</Category>
+                                                        <Category display={selectedDisciplines.includes(discipline.name) ? 'flex' : 'none'} >{'nao disponivel'}</Category>
                                                     :
                                                     discipline.teachersDisciplines.map(teacherDiscipline => {
                                                             
                                                         if(teacherDiscipline.tests.length === 0 || teacherDiscipline === undefined){
-                                                           return(<Category display={selectedCategories.includes(discipline.name) ? 'flex' : 'none'} >{'nao disponivel'}</Category>) 
+                                                           return(<Category display={selectedDisciplines.includes(discipline.name) ? 'flex' : 'none'} >{'nao disponivel'}</Category>) 
                                                         }
                                                         return(
                                                             
@@ -131,7 +155,7 @@ function FilterResults({filter, results}){
 
                                                                 return(
                                                                     <CategoriesTeachers>
-                                                                        <Category onClick={() => selectTest(`${test.category.name}${discipline.name}`)} display={selectedCategories.includes(discipline.name) ? 'flex' : 'none'} >{test.category.name}</Category>
+                                                                        <Category onClick={() => selectTest(`${test.category.name}${discipline.name}`)} display={selectedDisciplines.includes(discipline.name) ? 'flex' : 'none'} >{test.category.name}</Category>
                                                                         {test.category.tests.map(t => 
                                                                             {return(
                                                                                 <TeacherTest display={selectedTests.includes(`${test.category.name}${discipline.name}`) ? 'flex' : 'none'} >{t.name} {t.teacherDiscipline.teacher.name}</TeacherTest>
@@ -167,8 +191,47 @@ function FilterResults({filter, results}){
     }
     else if (filter === 'teachers'){
         return(
-            <>
-            </>
+
+            <TeachersCategories>
+                {results.map(teacher => {
+                    return(
+                        <>
+                            <Teacher onClick={() => selectTeacher(teacher.name)}>
+                                {teacher.name}
+                            </Teacher>
+                            <CategoriesTests>
+
+                                {teacher.teachersDisciplines.map(td => {
+
+                                    return(
+                                        
+                                        td.tests.length > 0 ?
+                                        td.tests.map(test => {return(
+                                           <>
+                                                <Categories onClick={() => selectCategory(test.category.name)} display={selectedTeachers.includes(teacher.name) ? 'flex' : 'none'} > 
+                                                    {test.category.name}
+                                                </Categories>
+
+                                                <TestsDisciplines>
+                                                    <Disciplines display={selectedCategories.includes(test.category.name) ? 'flex' : 'none'} >{test.name} {td.discipline.name}</Disciplines>
+                                                </TestsDisciplines>
+                                           </>
+
+                                        )})
+                                        
+                                        :
+                                        <Categories display={selectedTeachers.includes(teacher.name) ? 'flex' : 'none'} > 
+                                        {'indisponivel'}
+                                    </Categories>
+
+                                    )
+                                })}
+                            </CategoriesTests>
+                        </>
+                    ) 
+                })}
+            </TeachersCategories>
+
         )
     }
     else{
