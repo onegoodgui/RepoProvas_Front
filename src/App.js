@@ -6,24 +6,27 @@ import SignUp from "./pages/AuthPages/SignUp/SignUp";
 import Homepage from "./pages/Homepage/Homepage";
 
 import { AuthProvider } from "./contexts/AuthContext";
+import { FilterProvider } from "./contexts/FilterContext";
 
 function App() {
   return (
     <>
     <Container>
-    <AuthProvider>
-      <BrowserRouter>
-        <Header/>
+      
+      <AuthProvider>
+        <FilterProvider>
 
-        <Routes>
-          <Route path="/" element={<SignIn/>} />
-          <Route path="/sign-up" element={<SignUp/>} />
-          <Route path='/homepage' element={<Homepage/>}/>
-        </Routes>
+          <BrowserRouter>
+            <Header/>
+            <Routes>
+              <Route path="/" element={<SignIn/>} />
+              <Route path="/sign-up" element={<SignUp/>} />
+              <Route path='/homepage' element={<Homepage/>}/>
+            </Routes>
+          </BrowserRouter>
 
-      </BrowserRouter>
-
-    </AuthProvider>
+        </FilterProvider>
+      </AuthProvider>
 
     </Container>
     </>

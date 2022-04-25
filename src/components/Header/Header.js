@@ -1,13 +1,23 @@
 import { Button, FilterSegment, HeaderContainer, HeaderLogo, LogoContainer, SearchBar, SearchbarSegment, SearchContainer } from "./style";
 import repoProvas from "../../images/repoProvas.png"
 import { AddIcon, SchoolOutlineIcon, SubjectIcon } from "./icons";
+import ExitButton from "./ExitButton";
+import useAuth from "../../hooks/useAuth";
+import useFilter from "../../hooks/useFilter";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Header(){
+    
+    const {logout} = useAuth();
+    const navigate = useNavigate();
 
     const {pathname} = useLocation()
-    console.log(pathname)
+
+    function Logout(){
+        logout();
+        navigate('/');
+    }
 
     return(
         <HeaderContainer display={(pathname === '/sign-up' || pathname === '/') ? 'none': 'flex'}>
@@ -20,6 +30,7 @@ export default function Header(){
 
                 <SearchbarSegment>
                     <SearchBar placeholder="Filtre os professores..." height={40}/>
+                    <ExitButton height={40} onClick={() => Logout()}/>
                 </SearchbarSegment>
 
                 <FilterSegment>
@@ -42,7 +53,7 @@ function ButtonsList(){
     
     const [color, setColor] = useState(Array.from({length: Buttons.length}, () => '#868686'))
     const [isActive, setIsActive] = useState(Array.from({length: Buttons.length}, () => false))
-    const [filter, setFilter] = useState('');
+    const {filter, setFilter} = useFilter()
 
     function activateCondition(state, index, filter){
         

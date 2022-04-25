@@ -86,4 +86,39 @@ span{
     padding-left:10px;
 }
 `
-export {HeaderContainer, HeaderLogo, LogoContainer, SearchContainer, SearchbarSegment, SearchBar, FilterSegment, Button}
+const ExitButtonStyle = styled.button`
+
+all: unset;
+position: relative;
+
+width: ${props => props.height}px;
+height: ${props => props.height}px;
+
+
+text-align: center;
+margin-left: 50px;
+
+background-color: #4584F4;
+
+border-radius: ${props => (props.height/2)}px;
+
+p{
+    position: absolute;
+    z-index:-1;
+
+    top: 35%;
+    color: white;
+    left: 0px;
+
+    transition: all 2s ease-out;
+}
+:hover{
+    p{
+        left: 45px;
+        color: black;
+    }
+}
+
+`
+
+export {HeaderContainer, HeaderLogo, LogoContainer, SearchContainer, SearchbarSegment, SearchBar, FilterSegment, Button, ExitButtonStyle}

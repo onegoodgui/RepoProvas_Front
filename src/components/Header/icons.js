@@ -1,3 +1,4 @@
+import { ExitOutline } from 'react-ionicons'
 import { SchoolOutline } from 'react-ionicons'
 import { FlaskOutline } from 'react-ionicons'
 import { AddCircleOutline } from 'react-ionicons'
@@ -36,5 +37,18 @@ export function AddIcon({color, height, width}){
             width={width}
         />
 
+    )
+}
+
+export function ExitIcon({color, height, width}){
+
+    return(
+
+        <ExitOutline
+            color={color}   
+            height={height}
+            width={width}
+            style={{ verticalAlign: 'middle' }}
+        />
     )
 }
