@@ -53,7 +53,8 @@ function ButtonsList(){
     
     const [color, setColor] = useState(Array.from({length: Buttons.length}, () => '#868686'))
     const [isActive, setIsActive] = useState(Array.from({length: Buttons.length}, () => false))
-    const {filter, setFilter} = useFilter()
+    const {filter, setFilter} = useFilter();
+    const navigate = useNavigate();
 
     function activateCondition(state, index, filter){
         
@@ -65,6 +66,7 @@ function ButtonsList(){
             newColorArray[index] = '#868686';
             newActivityArray[index] = false;
             setFilter('');
+            navigate('/homepage')
         }
         else{
 
@@ -74,6 +76,7 @@ function ButtonsList(){
             newActivityArray.fill(false);
             newActivityArray[index] = true;
             setFilter(filter);
+            navigate(`/homepage/${filter}`)
         }
 
         state([...newActivityArray]);

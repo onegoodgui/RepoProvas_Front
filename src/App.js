@@ -22,6 +22,7 @@ function App() {
               <Route path="/" element={<SignIn/>} />
               <Route path="/sign-up" element={<SignUp/>} />
               <Route path='/homepage' element={<Homepage/>}/>
+              <Route path='/homepage/:filter' element={<Homepage/>}/>
             </Routes>
           </BrowserRouter>
 

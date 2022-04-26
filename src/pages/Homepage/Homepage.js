@@ -5,14 +5,21 @@ import { api } from "../../services/api";
 import { HomepageContainer } from "./style/style";
 import { CategoriesTeachers, Category, Discipline, DisciplinesCategories, TeacherTest, Term, TermsDisciplines} from "./style/disciplineFilter";
 import { Categories, CategoriesTests, Disciplines, Teacher, TeachersCategories, TestsDisciplines,  } from "./style/teachersFilter";
+import { useParams } from "react-router-dom";
 
 export default function Homepage(){
 
-    const {filter} = useFilter();
+    const [filter, setFilter] = useState([]);
     const {auth} = useAuth();
     const [results, setResults] = useState([]);
-    const [loading, setLoading] = useState(false);
-    console.log(filter);
+    const params = useParams();
+
+    console.log(params);
+
+    useEffect(() => {
+        setFilter(params.filter);
+        setResults([]);
+    },[params])
 
     useEffect(() => {
         
@@ -34,6 +41,7 @@ export default function Homepage(){
         loadFilters()
         
     },[filter])
+
     console.log(results)
 
     return(
@@ -52,13 +60,9 @@ function FilterResults({filter, results}){
     const [selectedCategories, setSelectedCategories] = useState([]);
     
 
-    // useEffect(() => {
-    //     const disciplineLengthArray = results.map((term) => (term.discipline.length === 0? '80px' : `${term.discipline.length * 80}px`));
-    //     const isListedDisciplines = results.map(() => false);
-    //     let isListedCategories = 
-    //     setTermsDisciplinesLength([...disciplineLengthArray]);
-    //     setIsListedDisciplines([...isListedDisciplines]);
-    // },[results])
+    useEffect(() => {
+
+    },[results])
 
 
     function selectTerm(index){
