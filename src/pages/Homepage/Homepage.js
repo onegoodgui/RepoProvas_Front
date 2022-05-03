@@ -302,9 +302,7 @@ function FilterResults({filter, results, loading, setLoading}){
                                         })
                                         
                                         :
-                                        <Categories display={selectedTeachers.includes(teacher.name) ? 'flex' : 'none'} > 
-                                        {'indisponivel'}
-                                    </Categories>
+                                        ''
 
                                     )
                                 })}
