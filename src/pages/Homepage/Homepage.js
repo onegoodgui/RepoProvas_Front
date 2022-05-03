@@ -50,7 +50,7 @@ export default function Homepage(){
         
     },[filter, search, loading])
 
-
+    console.log(results)
 
     return(
         <HomepageContainer paddingTop={filter === 'add' ? '180px' : '300px'}>
@@ -233,6 +233,7 @@ function FilterResults({filter, results, loading, setLoading}){
             <TeachersCategories>
                 {results.map(teacher => {
                     const repeatedCategories = [];
+                    const repeatedTestId = [];
                     return(
                         <>
                             <Teacher onClick={() => selectTeacher(teacher.name)}>
@@ -248,35 +249,57 @@ function FilterResults({filter, results, loading, setLoading}){
                                         
                                         td.tests.length > 0 ?
                                         td.tests.map(test => {
-
-                                            if(repeatedCategories[test.category.name]){
-                                                return(
-                                                <TestsDisciplines onClick={() => {updateViews(test.id, auth)}} display={selectedCategories.includes(`${test.category.name}${teacher.name}`) ? 'flex' : 'none'}>
-                                                    <Disciplines >{test.name} {td.discipline.name}</Disciplines>
-                                                    <Views style={{width:'80%'}}>
-                                                       Views: {test.views}
-                                                    </Views>
-                                                </TestsDisciplines>
-                                                )
-                                            }
-                                            else{
-                                                repeatedCategories[test.category.name] = 1;
+                                            if(repeatedCategories[test.category.categoryId]){
+                                                return
                                             }
                                             return(
-                                                <>
-                                                    <Categories onClick={() => selectCategory(`${test.category.name}${teacher.name}`)} display={selectedTeachers.includes(teacher.name) ? 'flex' : 'none'} > 
-                                                        {test.category.name}
-                                                    </Categories>
+                                                test.category.tests.map(tst => {
+                                                
+                                                if(teacher.id !== tst.teacherDiscipline.teacherId){
+                                                    return
+                                                }
 
-                                                    <TestsDisciplines onClick={() => {updateViews(test.id, auth)}} display={selectedCategories.includes(`${test.category.name}${teacher.name}`) ? 'flex' : 'none'} >
-                                                        <Disciplines >{test.name} {td.discipline.name}</Disciplines>
-                                                        <Views style={{width:'80%'}}>
-                                                           Views: {test.views}
-                                                        </Views>
-                                                    </TestsDisciplines>
-                                                </>
+                                                if(repeatedTestId[tst.id]){
+                                                    return
+                                                } 
+                                                else{
+                                                    repeatedTestId[tst.id] = 1
+                                                }   
+                                                if(repeatedCategories[test.category.name] && teacher.id === tst.teacherDiscipline.teacherId){
+                                                     return(
+                                                         <TestsDisciplines onClick={() => {updateViews(tst.id, auth)}} display={selectedCategories.includes(`${test.category.name}${teacher.name}`) ? 'flex' : 'none'}>
+                                                             <Disciplines >{tst.name} {td.discipline.name}</Disciplines>
+                                                             <Views style={{width:'80%'}}>
+                                                             Views: {tst.views}
+                                                             </Views>
+                                                         </TestsDisciplines>
+                                                     )
+                                                 }
+                                                 else{
 
-                                        )})
+                                                        
+                                                        repeatedCategories[test.category.name] = 1;
+
+                                                    return(
+                                                         <>
+                                                             <Categories onClick={() => selectCategory(`${test.category.name}${teacher.name}`)} display={selectedTeachers.includes(teacher.name) ? 'flex' : 'none'} > 
+                                                                 {test.category.name}
+                                                             </Categories>
+         
+                                                             <TestsDisciplines onClick={() => {updateViews(tst.id, auth)}} display={selectedCategories.includes(`${test.category.name}${teacher.name}`) ? 'flex' : 'none'} >
+                                                                 <Disciplines >{tst.name} {td.discipline.name}</Disciplines>
+                                                                 <Views style={{width:'80%'}}>
+                                                                    Views: {tst.views}
+                                                                 </Views>
+                                                             </TestsDisciplines>
+                                                         </>
+         
+                                                    )
+                                                 }
+                                                 })
+
+                                            )
+                                        })
                                         
                                         :
                                         <Categories display={selectedTeachers.includes(teacher.name) ? 'flex' : 'none'} > 
