@@ -287,7 +287,7 @@ function FilterResults({filter, results, loading, setLoading}){
                                                              </Categories>
          
                                                              <TestsDisciplines onClick={() => {updateViews(tst.id, auth)}} display={selectedCategories.includes(`${test.category.name}${teacher.name}`) ? 'flex' : 'none'} >
-                                                                 <Disciplines >{tst.name} {td.discipline.name}</Disciplines>
+                                                                 <Disciplines >{tst.name} {tst.teacherDiscipline.discipline.name}</Disciplines>
                                                                  <Views style={{width:'80%'}}>
                                                                     Views: {tst.views}
                                                                  </Views>
