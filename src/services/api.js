@@ -14,15 +14,41 @@ function signIn(signInData) {
   return axios.post(`${BASE_URL}/sign-in`, signInData);
 }
 
-async function searchFilter(token, filterType){
+function searchFilter(token, filterType, search){
   const config = createConfig(token);
 
-  return axios.get(`${BASE_URL}/filter/${filterType}`, config)
+  return axios.get(`${BASE_URL}/filter/${filterType}?filterSearch=${search}`, config)
+}
+
+function updateViews(token, testId){
+  const config = createConfig(token);
+
+  return axios.patch(`${BASE_URL}/tests/${testId}`,null,config);
+}
+
+function getTests(token){
+  const config = createConfig(token);
+
+  return axios.get(`${BASE_URL}/tests`, config);
+}
+
+function getTeachersByDiscipline(token, id){
+  const config = createConfig(token);
+  return axios.get(`${BASE_URL}/tests/discipline/${id}/teachers`, config)
+}
+
+function submitTest(token, test){
+  const config = createConfig(token);
+  return axios.post(`${BASE_URL}/tests`, test, config);
 }
 
 export const api = {
     createConfig,
     signUp,
     signIn,
-    searchFilter
+    searchFilter,
+    updateViews,
+    getTests,
+    getTeachersByDiscipline,
+    submitTest
 }

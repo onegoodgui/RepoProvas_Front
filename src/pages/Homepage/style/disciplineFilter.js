@@ -62,8 +62,11 @@ height: 40px;
 background-color: lightgreen;
 
 display: ${props => props.display};
+flex-direction: column;
 align-items: center;
 justify-content: center;
+
+padding: 10px 0px;
 `
 
 const CategoriesTeachers = styled.div`
@@ -74,4 +77,11 @@ align-items: center;
 width: 75%;
 `
 
-export {Term, Discipline, TermsDisciplines, Category, CategoriesTeachers, DisciplinesCategories, TeacherTest}
+const Test = styled.div`
+
+display: flex;
+align-items: center;
+justify-content: center;
+`
+
+export {Term, Discipline, TermsDisciplines, Category, CategoriesTeachers, DisciplinesCategories, TeacherTest, Test}

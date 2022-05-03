@@ -16,10 +16,6 @@ color: #000;
 
 padding: 0 15px;
 
-::placeholder {
-        
-    color: #000;
-}
 
 opacity: ${props => props.opacity}
 `

@@ -6,12 +6,15 @@ import useAuth from "../../hooks/useAuth";
 import useFilter from "../../hooks/useFilter";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import useSearch from "../../hooks/useSearch";
 
 export default function Header(){
     
     const {logout} = useAuth();
-    const navigate = useNavigate();
+    const {filter, setFilter} = useFilter();
+    const { search, setSearch} = useSearch();
 
+    const navigate = useNavigate();
     const {pathname} = useLocation()
 
     function Logout(){
@@ -29,7 +32,9 @@ export default function Header(){
             <SearchContainer>
 
                 <SearchbarSegment>
-                    <SearchBar placeholder="Filtre os professores..." height={40}/>
+                    <SearchBar placeholder={filter === 'teachers' ? 'Filtre os professores' : filter === 'disciplines' ? 'Filtre as disciplinas' : ''} onChange={(e) => {setSearch(e.target.value)}} height={40}>
+
+                    </SearchBar>
                     <ExitButton height={40} onClick={() => Logout()}/>
                 </SearchbarSegment>
 
@@ -48,7 +53,7 @@ function ButtonsList(){
     const Buttons = [
         {title: 'Por disciplina', icon:SubjectIcon, type:'filter', filterType: 'disciplines'},
         {title: 'Por professor', icon:SchoolOutlineIcon, type:'filter', filterType: 'teachers'},
-        {title: 'Adicionar Prova', icon: AddIcon, type: 'add', filterType: ''}
+        {title: 'Adicionar Prova', icon: AddIcon, type: 'add', filterType: 'add'}
     ]
     
     const [color, setColor] = useState(Array.from({length: Buttons.length}, () => '#868686'))

@@ -7,6 +7,7 @@ import Homepage from "./pages/Homepage/Homepage";
 
 import { AuthProvider } from "./contexts/AuthContext";
 import { FilterProvider } from "./contexts/FilterContext";
+import {SearchProvider} from './contexts/SearchContext';
 
 function App() {
   return (
@@ -15,17 +16,17 @@ function App() {
       
       <AuthProvider>
         <FilterProvider>
-
-          <BrowserRouter>
-            <Header/>
-            <Routes>
-              <Route path="/" element={<SignIn/>} />
-              <Route path="/sign-up" element={<SignUp/>} />
-              <Route path='/homepage' element={<Homepage/>}/>
-              <Route path='/homepage/:filter' element={<Homepage/>}/>
-            </Routes>
-          </BrowserRouter>
-
+          <SearchProvider>
+            <BrowserRouter>
+              <Header/>
+              <Routes>
+                <Route path="/" element={<SignIn/>} />
+                <Route path="/sign-up" element={<SignUp/>} />
+                <Route path='/homepage' element={<Homepage/>}/>
+                <Route path='/homepage/:filter' element={<Homepage/>}/>
+              </Routes>
+            </BrowserRouter>
+          </SearchProvider>
         </FilterProvider>
       </AuthProvider>
 

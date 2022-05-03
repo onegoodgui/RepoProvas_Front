@@ -44,7 +44,7 @@ width: 80%;
 height: 40px;
 background-color: lightcoral;
 
-display: ${props => props.display};
+display: flex;
 align-items: center;
 justify-content: center;
 `
@@ -69,10 +69,12 @@ justify-content: center;
 
 const TestsDisciplines = styled.div`
 
-display: flex;
+display: ${props => props.display};
 flex-direction: column;
 align-items: center;
 width: 75%;
+
+margin-bottom: 15px;
 `
 
 export {Teacher, TeachersCategories, Categories, CategoriesTests, TestsDisciplines, Disciplines}
